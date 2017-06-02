@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Graphing Mean Daily Plaza Traffic</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.9.1/d3.js"></script>
+	<script type="text/javascript">
+		function draw(data) {
+			"use strict";
+			d3.select("body")
+				.append("div")
+					.attr("class","chart")
+				.selectAll(".bar")
+				.data(data.cash)
+				.enter()
+				.append("div")
+					.attr("class","bar")
+					.style("width", function(d) {
+						return d.count / 100 + "px"
+					})
+					.style("outline", "1px solid black")
+					.text(function(d) {
+						return Math.round(d.count)
+					});
+
+			d3.select("body")
+				.append("div")
+					.attr("class", "chart")
+				.selectAll("div.line")
+				.data(data.cash)
+				.enter()
+				.append("div")
+					.attr("class","line");
+
+			d3.selectAll("div.line")
+				.append("div")
+					.attr("class","label")
+					.text(function(d) {
+						return d.name
+					});
+
+			d3.selectAll("div.line")
+				.append("div")
+					.attr("class","bar")
+					.style("width", function(d) {
+						return d.count / 100 + "px"
+					})
+					.text(function(d) {
+						return Math.round(d.count)
+					});
+		}
+	</script>
+	<style type="text/css">
+		div.chart {
+			font-family: sans-serif;
+			font-size: 0.7em;
+			margin-bottom: 20px;
+		}
+		div.bar {
+			background-color: DarkRed;
+			color: white;
+			height: 3em;
+			line-height: 3em;
+			padding-right: 1em;
+			margin-bottom: 4px;
+			text-align: right;
+			margin-left:24em;
+		}
+		div.label {
+			height: 3em;
+			line-height: 3em;
+			padding-right: 1em;
+			margin-bottom: 2px;
+			float: left;
+			width: 22em;
+			text-align: right;
+		}
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+		d3.json("data/plaza_traffic.json", draw);
+	</script>
+</body>
+</html>
