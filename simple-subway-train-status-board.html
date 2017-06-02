@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.9.1/d3.js"></script>
+	<script type="text/javascript">
+		function draw(data) {
+			"use strict";
+			d3.select("body")
+				.append("ul")
+				.selectAll("li")
+				.data(data.subway)
+				.enter()
+				.append("li")
+					.text(function (d) {
+						return d.name + ": " + d.status;
+					});
+
+			d3.selectAll("li")
+				.style("font-weight", function (d) {
+					if (d.status == "GOOD SERVICE"){
+						return "normal";
+					} else {
+						return "bold";
+					}
+    			});
+		}
+	</script>
+</head>
+<body>
+	<script type="text/javascript">
+		d3.json("data/service_status.json", draw);
+	</script>
+</body>
+</html>
